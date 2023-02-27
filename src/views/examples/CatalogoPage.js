@@ -5,7 +5,6 @@ import {
   Badge,
   Container,
   Row,
-  Button,
   Col,
   Nav,
   NavItem,
@@ -47,7 +46,7 @@ function CatalogoPage() {
         : `api/v1/productos?desde=0&limite=100`
     );
 
-    const { productos, categorias, destinos } = await resp.json();
+    const { productos,  destinos } = await resp.json();
 
     if (resp.ok) {
       setData(productos);

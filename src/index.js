@@ -12,13 +12,11 @@ import Index from "views/Index.js";
 import Pdf from "components/Funcionales/PdfView.js";
 import NucleoIcons from "views/NucleoIcons.js";
 import LoginPage from "views/examples/LoginPage.js";
-import RegisterProdPage from "views/examples/RegisterProdPage";
 import LandingPage from "views/examples/LandingPage.js";
 import SignUpPage from "./views/examples/SignUp.js";
 import HomePage from "views/examples/HomePage";
 import CatalogoPage from "views/examples/CatalogoPage.js";
 import RecetariosPage from "views/examples/RecetariosPage.js";
-import ProfilePage from "views/examples/ProfilePage.js";
 import ProfileAdminPage from "views/examples/ProfileAdminPage.js";
 import NoticiasPage from "views/examples/NoticiasPage.js";
 
@@ -54,10 +52,6 @@ root.render(
           render={(props) => <Pdf {...props} />}
         />
         <Route
-          path="/profile-page"
-          render={(props) => <ProfilePage {...props} />}
-        />
-        <Route
           path="/profilead-page"
           render={(props) => <ProfileAdminPage {...props} />}
         />
@@ -72,10 +66,6 @@ root.render(
         <Route
           path="/login-page"
           render={(props) => <LoginPage {...props} />}
-        />
-        <Route
-          path="/registerprod-page"
-          render={(props) => <RegisterProdPage {...props} />}
         />
         <Redirect to="/landing-page" />
         <Redirect from="/" to="/landing-page" />

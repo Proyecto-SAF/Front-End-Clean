@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import MapView from "components/Funcionales/MapView";
 // reactstrap components
 import {
@@ -22,9 +22,24 @@ import ProfileNavbar from "components/Navbars/ProfileNavbar.js";
 import ProfileAdminHeader from "components/Headers/ProfileAdminHeader.js";
 import DefaultFooter from "components/Footers/DefaultFooter.js";
 
+import * as yup from "yup";
+let Noticias_Schema = yup.object().shape({
+  fecha: yup.string().required("Campo requerido"),
+  ubicacion: yup.string().required("Campo requerido"),
+  titular: yup.string().required("Campo requerido"),
+  subtitulo: yup.string().required("Campo requerido"),
+  cuerpo: yup.string().required("Campo requerido"),
+});
+
 function ProfileAdminPage() {
   const [pills, setPills] = React.useState("2");
-  const [firstFocus, setFirstFocus] = React.useState(false);
+  const [fecha, setFecha] = useState("");
+  const [ubicacion, setUbicacion] = useState("");
+  const [titular, setTitular] = useState("");
+  const [subtitulo, setSubtitulo] = useState("");
+  const [cuerpo, setCuerpo] = useState("");
+
+  const [habilitado, setHabilitado] = useState(false);
   React.useEffect(() => {
     document.body.classList.add("profile-page");
     document.body.classList.add("sidebar-collapse");
@@ -36,6 +51,49 @@ function ProfileAdminPage() {
       document.body.classList.remove("sidebar-collapse");
     };
   }, []);
+
+  useEffect(() => {
+    Noticias_Schema.isValid({
+      fecha,
+      ubicacion,
+      titular,
+      subtitulo,
+      cuerpo,
+    }).then((valid) => {
+      if (valid) {
+        setHabilitado(true);
+      } else {
+        setHabilitado(false);
+      }
+    });
+  }, [fecha, ubicacion, titular, subtitulo, cuerpo]);
+
+  const resgistroNoticia = async () => {
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      fecha,
+      ubicacion,
+      titular,
+      subtitulo,
+      cuerpo,
+    });
+
+    console.log("el cuerpo es:", raw);
+
+    const options = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    const postData = await fetch("http://localhost:4000/crearNoticia", options);
+    const res = postData.json();
+    console.log(res);
+  };
+
   return (
     <>
       <ProfileNavbar />
@@ -43,9 +101,7 @@ function ProfileAdminPage() {
       <Container>
         <Col className="ml-auto mr-auto" md="4">
           <div className="nav-align-center">
-          <h2 className="title text-center">
-                  Marca y Comunica
-              </h2>
+            <h2 className="title text-center">Marca y Comunica</h2>
             <Nav
               className="nav-pills-info nav-pills-just-icons"
               pills
@@ -82,14 +138,12 @@ function ProfileAdminPage() {
         <TabContent className="gallery" activeTab={"pills" + pills}>
           <TabPane tabId="pills3">
             <Col className="ml-auto mr-auto" md="5">
-              
-                <h2 className="title">
-                  Marca en este mapa donde se realizara el Programa SAF
-                </h2>
-                
+              <h2 className="title">
+                Marca en este mapa donde se realizara el Programa SAF
+              </h2>
             </Col>
             <div className="ml-auto mr-auto" md="4">
-            <MapView />
+              <MapView />
             </div>
           </TabPane>
           <TabPane tabId="pills2">
@@ -102,21 +156,60 @@ function ProfileAdminPage() {
                     programa soverania alimentaria Formoseña.
                   </p>
                   <Row>
-                    <InputGroup
-                      className={
-                        "input-lg" + (firstFocus ? " input-group-focus" : "")
-                      }
-                    >
+                    <InputGroup className={"input-lg input-group-focus"}>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                          <i className="now-ui-icons users_circle-08"></i>
+                          <i className="now-ui-icons ui-1_calendar-60"></i>
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        placeholder="Fecha"
+                        type="date"
+                        onChange={(e) => {
+                          setFecha(e.target.value);
+                        }}
+                      ></Input>
+                    </InputGroup>
+                    <InputGroup className={"input-lg  input-group-focus"}>
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="now-ui-icons location_pin"></i>
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        placeholder="Ubicacion"
+                        type="string"
+                        onChange={(e) => {
+                          setUbicacion(e.target.value);
+                        }}
+                      ></Input>
+                    </InputGroup>
+                    <InputGroup className={"input-lg input-group-focus"}>
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="now-ui-icons text_bold"></i>
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
                         placeholder="Titulo"
-                        type="text"
-                        onFocus={() => setFirstFocus(true)}
-                        onBlur={() => setFirstFocus(false)}
+                        type="string"
+                        onChange={(e) => {
+                          setTitular(e.target.value);
+                        }}
+                      ></Input>
+                    </InputGroup>
+                    <InputGroup className={"input-lg input-group-focus"}>
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="now-ui-icons text_caps-small"></i>
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        placeholder="Subtitulo"
+                        type="string"
+                        onChange={(e) => {
+                          setSubtitulo(e.target.value);
+                        }}
                       ></Input>
                     </InputGroup>
                     <div className="textarea-container">
@@ -126,6 +219,9 @@ function ProfileAdminPage() {
                         placeholder="Noticia SAF"
                         rows="6"
                         type="textarea"
+                        onChange={(e) => {
+                          setCuerpo(e.target.value);
+                        }}
                       ></Input>
                     </div>
                     <div className="send-button">
@@ -134,7 +230,7 @@ function ProfileAdminPage() {
                         className="btn-round"
                         color="info"
                         href="#pablo"
-                        onClick={(e) => e.preventDefault()}
+                        onClick={resgistroNoticia}
                         size="lg"
                       >
                         PUBLICAR

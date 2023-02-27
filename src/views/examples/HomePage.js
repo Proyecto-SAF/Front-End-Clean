@@ -11,7 +11,6 @@ import DefaultFooter from "components/Footers/DefaultFooter.js";
 import IndexHeader from "components/Headers/IndexHeader";
 
 function HomePage() {
-  const [alert2, setAlert2] = React.useState(true);
    const [alert3] = React.useState(true);
   React.useEffect(() => {
     document.body.classList.add("Home-page");

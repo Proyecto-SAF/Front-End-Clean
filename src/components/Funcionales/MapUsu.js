@@ -7,7 +7,6 @@ import {
   Popup,
   Marker,
 } from "react-leaflet";
-import { EditControl } from "react-leaflet-draw";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
 
@@ -27,7 +26,6 @@ const MapView = () => {
     lat: "-26.18064675300086",
     lng: "-58.188628961794805",
   });
-  const [mapLayers, setMapLayers] = useState([]);
   const mapRef = useRef();
   
  

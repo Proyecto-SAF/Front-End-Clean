@@ -1,9 +1,8 @@
 import React from "react";
 import "../../components/Funcionales/App.css";
-import MapUsu from "components/Funcionales/MapUsu";
 
 // reactstrap components
-import { Row, Col, Badge, Alert, Container } from "reactstrap";
+import { Row, Col} from "reactstrap";
 
 // core components
 import HomeNavbar from "components/Navbars/HomeNavbar";
@@ -11,8 +10,7 @@ import DefaultFooter from "components/Footers/DefaultFooter.js";
 import NoticiasPageHeader from "components/Headers/NoticiasPageHeader";
 
 function HomePage() {
-  const [alert2, setAlert2] = React.useState(true);
-  const [alert3] = React.useState(true);
+  
   React.useEffect(() => {
     document.body.classList.add("Home-page");
     document.body.classList.add("sidebar-collapse");

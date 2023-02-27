@@ -1,20 +1,13 @@
-import React, { Component, useEffect } from 'react';
+import React from 'react';
 
 const Pdf = ({match}) => {
 
     var pdfUrl = match.params.urlpdf;
-/* 
 
- componentDidMount() {
-        if(typeof window.orientation !== "undefined"){
-            document.getElementById('enlaceDescargarPdf').click();
-            window.close();
-        }
-    }*/
         return (
             <div style={{position: 'absolute', width: '100%', height: '100%'}}>
                 {
-                    pdfUrl == 1 ?
+                    pdfUrl === 1 ?
                     <object
                 data={require('../../assets/PDF/inta_-_mi_casa-_mi_huerta.pdf')}
                 type="application/pdf"
@@ -28,7 +21,7 @@ const Pdf = ({match}) => {
                 </object>
                 :
                 (
-                    pdfUrl== 2 ?
+                    pdfUrl === 2 ?
                     <object
                 data={require('../../assets/PDF/script-tmp-manual_de_cultivos_para_la_huerta_organica_familiar_-.pdf')}
                 type="application/pdf"
