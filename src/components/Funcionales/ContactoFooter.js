@@ -67,7 +67,7 @@ const options = {
 }
 
 
-const postData = await fetch("https://plataforma-saf-back.onrender.com/contacto", options)
+const postData = await fetch("http://localhost:4000/contacto", options)
 const res = postData.json()
 console.log(res)
 setResgistrado(true)
