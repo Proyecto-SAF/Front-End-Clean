@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { useHistory } from "react-router-dom";
+import { AlertaModal } from "../../components/Funcionales/Alertas.js";
 
 import {
   Label, FormGroup, Input,
@@ -17,6 +18,7 @@ let ContactoSchema = yup.object().shape({
 })
 
 function ContactoFooter() {
+  const formRef = useRef(null);
   const [mensaje, setMensaje] = useState('');
   const [nombreCompleto, setNombreCompleto] = useState('');
   const [documento, setDocumento] = useState('');
@@ -39,7 +41,7 @@ function ContactoFooter() {
         }
       }
     )
-  },[nombreCompleto, correo, documento,mensaje, ContactoSchema])
+  },[nombreCompleto, correo, documento,mensaje])
 
   const history = useHistory()
   const resgistroContacto = async () => {
@@ -71,6 +73,14 @@ const postData = await fetch("http://localhost:4000/contacto", options)
 const res = postData.json()
 console.log(res)
 setResgistrado(true)
+formRef.current.reset();
+
+AlertaModal({
+  tituloModal: 'Se agrego correctamente tu reclamo',
+  tipoModal: 'success',
+  colorModal: 'green',
+  tiempoModal: 2000
+})
   }
 
   
@@ -96,7 +106,7 @@ setResgistrado(true)
         <Container>
           <h2 className="title">Contáctenos</h2>
           <p className="description">Para comunicarte con la Subsecretaría de Defensa al Consumidor complete el siguiente formulario.</p>
-          <Row>
+          <form ref={formRef}>
             <Col className="text-center ml-auto mr-auto" lg="6" md="8">
               <h6>Tu Nombre y Apellido completo*</h6>
               <InputGroup
@@ -246,7 +256,7 @@ setResgistrado(true)
               </div>
               <br></br>
             </Col>
-          </Row>
+          </form>
           <Alert color="dark">
             <h6 className="alert-heading description" style={{ padding: "3px" }}>
               <i className="now-ui-icons travel_info" style={{ padding: "6px" }}></i>

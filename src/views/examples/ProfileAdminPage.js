@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MapView from "components/Funcionales/MapView";
+import { AlertaModal } from "../../components/Funcionales/Alertas.js";
 // reactstrap components
 import {
   Container,
@@ -32,6 +33,7 @@ let Noticias_Schema = yup.object().shape({
 });
 
 function ProfileAdminPage() {
+  const formRef = useRef(null);
   const [pills, setPills] = React.useState("2");
   const [fecha, setFecha] = useState("");
   const [ubicacion, setUbicacion] = useState("");
@@ -92,6 +94,14 @@ function ProfileAdminPage() {
     const postData = await fetch("http://localhost:4000/crearNoticia", options);
     const res = postData.json();
     console.log(res);
+    formRef.current.reset();
+
+    AlertaModal({
+      tituloModal: 'Se agrego correctamente la noticia',
+      tipoModal: 'success',
+      colorModal: 'green',
+      tiempoModal: 2000
+    })
   };
 
   return (
@@ -155,7 +165,7 @@ function ProfileAdminPage() {
                     En este espacio podras publicar noticias relacionadas con el
                     programa soverania alimentaria Formoseña.
                   </p>
-                  <Row>
+                  <form ref={formRef}>
                     <InputGroup className={"input-lg input-group-focus"}>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
@@ -236,7 +246,7 @@ function ProfileAdminPage() {
                         PUBLICAR
                       </Button>
                     </div>
-                  </Row>
+                  </form>
                 </div>
               </Row>
             </Col>

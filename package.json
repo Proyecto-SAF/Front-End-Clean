@@ -25,6 +25,8 @@
     "react-select": "^5.6.1",
     "reactstrap": "^8.10.1",
     "sass": "1.54.0",
+    "sweetalert2": "^11.7.2",
+    "sweetalert2-react-content": "^5.0.7",
     "yup": "^0.32.11"
   },
   "scripts": {
