@@ -74,6 +74,7 @@ function ProfileAdminPage() {
       img
     }).then((valid) => {
       if (valid) {
+        
         setHabilitado(true);
       } else {
         setHabilitado(false);
@@ -115,6 +116,7 @@ function ProfileAdminPage() {
       colorModal: 'green',
       tiempoModal: 2000
     })
+
     formRef.current.reset();
   };
 
@@ -123,9 +125,9 @@ function ProfileAdminPage() {
       <ProfileNavbar />
       <ProfileAdminHeader />
       <Container>
-        <Col className="ml-auto mr-auto" md="4">
+        <Col className="ml-auto mr-auto" md="9">
           <div className="nav-align-center">
-            <h2 className="title text-center">Marca y Comunica</h2>
+            <h2 className="title text-center">Este es tu menu para administrar las noticias SAF</h2>
             <Nav
               className="nav-pills-info nav-pills-just-icons"
               pills
@@ -158,27 +160,24 @@ function ProfileAdminPage() {
             </Nav>
           </div>
         </Col>
-
         <TabContent className="gallery" activeTab={"pills" + pills}>
           <TabPane tabId="pills3">
-            <Col className="ml-auto mr-auto" md="5">
+            <Col className="ml-auto mr-auto" md="9">
               <h2 className="title">
                 Marca en este mapa donde se realizara el Programa SAF
               </h2>
-            </Col>
-            <div className="ml-auto mr-auto" md="4">
               <MapView />
-            </div>
+            </Col>
           </TabPane>
           <TabPane tabId="pills2">
             <Col className="ml-auto mr-auto" md="5">
               <Row className="collections">
                 <div className=" text-center">
                   <h2 className="title">Noticias!!</h2>
-                  <p className="description">
+                  <h4 className="description">
                     En este espacio podras publicar noticias relacionadas con el
                     programa soverania alimentaria Formoseña.
-                  </p>
+                  </h4>
                   <form ref={formRef} encType="multipart/form-data" > 
                   <InputGroup className={"input-lg input-group-focus"}>
                       <InputGroupAddon addonType="prepend">
@@ -190,7 +189,9 @@ function ProfileAdminPage() {
                         placeholder="Imagen"
                         type="file"
                         onChange={handleImageChange}
+                        
                       ></Input>
+                       
                     </InputGroup>
                     {imageSrc && (
         <img src={imageSrc} alt="Previsualización de imagen" width="200" />

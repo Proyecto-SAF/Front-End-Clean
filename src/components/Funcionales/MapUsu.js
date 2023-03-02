@@ -46,7 +46,9 @@ const MapView = () => {
     };
   }, []);
   return (
-    <MapContainer
+    <div className='row'>
+    <div className='col text-center'>
+    <MapContainer 
       center={center}
       zoom={12}
       ref={mapRef}
@@ -90,7 +92,10 @@ const MapView = () => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
     </MapContainer>
+    </div>
+  </div>
   );
+  
 };
 
 export default MapView;
