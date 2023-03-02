@@ -1,5 +1,6 @@
-import React from "react";
+import React,{useEffect, useState } from "react";
 import "../../components/Funcionales/App.css";
+import axios from "axios";
 
 // reactstrap components
 import { Row, Col} from "reactstrap";
@@ -18,13 +19,59 @@ function HomePage() {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
   }, []);
+
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/noticias");
+        setData(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+
   return (
     <>
       <HomeNavbar />
       <NoticiasPageHeader />
       <br></br>
       <Row>
-        <Col md="4">
+      
+      <div>
+      {isLoading ? (
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      ) : (
+        <table className="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((item) => (
+            <tr key={item.id}>
+              <td>{item.id}</td>
+              <td>{item.name}</td>
+              <td>{item.age}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      )}
+        </div>
+        {/* <Col md="4">
           <div className="typography-line">
             <div className="logo-container">
               <img
@@ -150,7 +197,8 @@ function HomePage() {
               de hacernos conocer y poder comercializar nuestros productos”.
             </p>
           </div>
-        </Col>
+        </Col> */}
+          
       </Row>
       <DefaultFooter />
     </>

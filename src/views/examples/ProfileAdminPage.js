@@ -29,7 +29,7 @@ let Noticias_Schema = yup.object().shape({
   ubicacion: yup.string().required("Campo requerido"),
   titular: yup.string().required("Campo requerido"),
   subtitulo: yup.string().required("Campo requerido"),
-  cuerpo: yup.string().required("Campo requerido")
+  cuerpo: yup.string().required("Campo requerido"),
 });
 
 function ProfileAdminPage() {
@@ -62,7 +62,7 @@ function ProfileAdminPage() {
     const imageUrl = URL.createObjectURL(file);
     setImageSrc(imageUrl);
     setImg(imagen);
-  }
+  };
 
   useEffect(() => {
     Noticias_Schema.isValid({
@@ -71,15 +71,13 @@ function ProfileAdminPage() {
       titular,
       subtitulo,
       cuerpo,
-      img
+      img,
     }).then((valid) => {
       if (valid) {
-        
         setHabilitado(true);
       } else {
         setHabilitado(false);
       }
-      
     });
   }, [fecha, ubicacion, titular, subtitulo, cuerpo, img]);
 
@@ -93,10 +91,9 @@ function ProfileAdminPage() {
       titular,
       subtitulo,
       cuerpo,
-      img
+      img,
     });
 
-    
     console.log("el cuerpo es:", raw);
 
     const options = {
@@ -109,13 +106,13 @@ function ProfileAdminPage() {
     const postData = await fetch("http://localhost:4000/crearNoticia", options);
     const res = postData.json();
     console.log(res);
-    
+
     AlertaModal({
-      tituloModal: 'Se agrego correctamente la noticia',
-      tipoModal: 'success',
-      colorModal: 'green',
-      tiempoModal: 2000
-    })
+      tituloModal: "Se agrego correctamente la noticia",
+      tipoModal: "success",
+      colorModal: "green",
+      tiempoModal: 2000,
+    });
 
     formRef.current.reset();
   };
@@ -127,7 +124,9 @@ function ProfileAdminPage() {
       <Container>
         <Col className="ml-auto mr-auto" md="9">
           <div className="nav-align-center">
-            <h2 className="title text-center">Este es tu menu para administrar las noticias SAF</h2>
+            <h2 className="title text-center">
+              Este es tu menu para administrar las noticias SAF
+            </h2>
             <Nav
               className="nav-pills-info nav-pills-just-icons"
               pills
@@ -178,24 +177,28 @@ function ProfileAdminPage() {
                     En este espacio podras publicar noticias relacionadas con el
                     programa soverania alimentaria Formoseña.
                   </h4>
-                  <form ref={formRef} encType="multipart/form-data" > 
-                  <InputGroup className={"input-lg input-group-focus"}>
+                  <form ref={formRef} encType="multipart/form-data">
+                    <InputGroup className={"input-lg input-group-focus"}>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="now-ui-icons media-1_album"></i>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input name="img" accept="image/*"
+                      <Input
+                        name="img"
+                        accept="image/*"
                         placeholder="Imagen"
                         type="file"
                         onChange={handleImageChange}
-                        
                       ></Input>
-                       
                     </InputGroup>
                     {imageSrc && (
-        <img src={imageSrc} alt="Previsualización de imagen" width="200" />
-      )}
+                      <img
+                        src={imageSrc}
+                        alt="Previsualización de imagen"
+                        width="200"
+                      />
+                    )}
                     <InputGroup className={"input-lg input-group-focus"}>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
