@@ -31,7 +31,7 @@ const MapView = () => {
     
           setMapLayers((layers) => [
             ...layers,
-            { id: _leaflet_id/* , latlngs: layer.getLatLngs()[0]  */},
+            { id: _leaflet_id, latlngs: layer.getLatLngs()[0] },
           ]);
         }
       };

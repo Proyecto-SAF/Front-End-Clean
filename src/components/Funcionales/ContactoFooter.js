@@ -6,7 +6,7 @@ import {
   Label, FormGroup, Input,
   InputGroup, InputGroupAddon,
   InputGroupText, Container,
-  Row, Col, Button, Alert
+  Col, Button, Alert
 } from "reactstrap";
 import * as yup from 'yup';
 let ContactoSchema = yup.object().shape({
