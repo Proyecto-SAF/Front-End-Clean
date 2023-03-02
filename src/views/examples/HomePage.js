@@ -11,7 +11,7 @@ import DefaultFooter from "components/Footers/DefaultFooter.js";
 import IndexHeader from "components/Headers/IndexHeader";
 
 function HomePage() {
-   const [alert3] = React.useState(true);
+  const [alert3] = React.useState(true);
   React.useEffect(() => {
     document.body.classList.add("Home-page");
     document.body.classList.add("sidebar-collapse");
@@ -25,22 +25,18 @@ function HomePage() {
       <IndexHeader />
       <br></br>
       <Row>
-  
         <div id="Map" className="text-center">
-   
-        <Alert color="info" isOpen={alert3}>
-               <h2>
-               Haz click en el punto mas cercano y veras en que momento se
+          <Alert color="info" isOpen={alert3}>
+            <h2>
+              Haz click en el punto mas cercano y veras en que momento se
               realizara el programa soberanía alimentaria formoseña.
             </h2>
           </Alert>
           <MapUsu />
-            <br></br>
+          <br></br>
           <Alert color="info" isOpen={alert3}>
             <Container>
-               <h2>
-              Noticias del Programa SAF
-            </h2>
+              <h2>Noticias del Programa SAF</h2>
             </Container>
           </Alert>
           <br></br>
@@ -48,16 +44,13 @@ function HomePage() {
 
         <Col md="4">
           <div className="typography-line">
-           
-
             <div className="logo-container">
               <img alt="..." src={require("assets/img/LogoNoticia.jpg")}></img>
             </div>
-            
           </div>
         </Col>
         <br></br>
-        
+
         <Col md="6">
           <div className="Text-Center">
             <h2>Exitosa Feria Fresca y Soberanía Alimentaria</h2>
@@ -101,19 +94,19 @@ function HomePage() {
               espacio generamos una interacción permanente con las vecinas y
               estamos muy agradecidas con el municipio por darnos la posibilidad
               de hacernos conocer y poder comercializar nuestros productos”.
-              </p>
+            </p>
           </div>
           <Col className="ml-auto mr-auto" md="9">
-        <Button
-                    className="btn-round"
-                    color="info"
-                    href="/noticias-page"
-                    size="lg"
-                  >Mas noticias!!!
-                  </Button>
-                  </Col>
+            <Button
+              className="btn-round"
+              color="info"
+              href="/verNoticias"
+              size="lg"
+            >
+              Mas noticias!!!
+            </Button>
+          </Col>
         </Col>
-        
       </Row>
       <DefaultFooter />
     </>

@@ -74,7 +74,7 @@ function ExamplesNavbar() {
                    >
                 Catalogo de Productos
               </DropdownItem>
-              <DropdownItem href="/noticias-page"
+              <DropdownItem href="/verNoticias"
                    >
                 Noticias SAF
               </DropdownItem>

@@ -36,7 +36,7 @@ function NoticiasPageHeader() {
         ></div>
          <div className="content-center">
           <Container>
-            <h1 className="title">Aqui podras encontrar las noticias del programa SAF</h1>
+            <h2>Informativo hasta el día</h2>
             <div className="text-center">
          
             </div>

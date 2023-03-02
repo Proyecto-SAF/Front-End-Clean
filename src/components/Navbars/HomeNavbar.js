@@ -71,7 +71,7 @@ function HomeNavbar() {
                     Catalogo de Productos
                   </DropdownItem>
                   <DropdownItem
-                    href="/noticias-page"
+                    href="/verNoticias"
                   >
                     Noticias
                   </DropdownItem>

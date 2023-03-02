@@ -56,7 +56,7 @@ root.render(
           render={(props) => <ProfileAdminPage {...props} />}
         />
         <Route
-          path="/noticias-page"
+          path="/verNoticias"
           render={(props) => <NoticiasPage {...props} />}
         />
         <Route
