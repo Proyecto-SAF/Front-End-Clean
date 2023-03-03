@@ -69,7 +69,7 @@ function SignUp() {
       redirect: "follow",
     };
 
-    const postData = await fetch("http://localhost:4000/auth/login", options);
+    const postData = await fetch("http://localhost:4000/iniciarSesion", options);
     const respu = await postData.json();
     console.log(respu);
     const { token } = respu;
@@ -77,7 +77,7 @@ function SignUp() {
     setLogeado(true);
 
     AlertaModal({
-      tituloModal: "Se inicio sesion correctamente",
+      tituloModal: "Se inició sesión correctamente",
       tipoModal: "success",
       colorModal: "green",
       tiempoModal: 2000,
