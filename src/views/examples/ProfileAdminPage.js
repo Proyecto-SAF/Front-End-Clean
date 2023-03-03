@@ -44,6 +44,9 @@ function ProfileAdminPage() {
   const [img, setImg] = useState("");
 
   const [habilitado, setHabilitado] = useState(false);
+
+  const inputFileRef = React.useRef();
+
   React.useEffect(() => {
     document.body.classList.add("profile-page");
     document.body.classList.add("sidebar-collapse");
@@ -94,8 +97,6 @@ function ProfileAdminPage() {
       img,
     });
 
-    console.log("el cuerpo es:", raw);
-
     const options = {
       method: "POST",
       headers: myHeaders,
@@ -107,12 +108,24 @@ function ProfileAdminPage() {
     const res = postData.json();
     console.log(res);
 
-    AlertaModal({
-      tituloModal: "Se agrego correctamente la noticia",
-      tipoModal: "success",
-      colorModal: "green",
-      tiempoModal: 2000,
-    });
+
+    if (habilitado) {
+      AlertaModal({
+        tituloModal: "Se agregó correctamente la noticia",
+        tipoModal: "success",
+        colorModal: "green",
+        tiempoModal: 2000,
+      });
+    } else {
+      AlertaModal({
+        tituloModal: "Hay un error en el formulario",
+        tipoModal: "warning",
+        colorModal: "red",
+        tiempoModal: 2000,
+      });
+    }
+
+
 
     formRef.current.reset();
   };
@@ -189,6 +202,7 @@ function ProfileAdminPage() {
                         accept="image/*"
                         placeholder="Imagen"
                         type="file"
+                        ref={inputFileRef}
                         onChange={handleImageChange}
                       ></Input>
                     </InputGroup>
