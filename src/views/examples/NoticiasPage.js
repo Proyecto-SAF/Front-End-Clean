@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import {  Row, Col, Spinner } from "reactstrap";
+import {  Row,  Spinner } from "reactstrap";
 
 import "../../components/Funcionales/App.css";
 
@@ -17,7 +17,7 @@ function HomePage() {
   //estado de la carga de peticiones
   const [loading, setLoading] = useState(true);
   //estado para la primera vez que se renderizan los productos en el catalogo
-  const [primeraVez, setPrimeraVez] = useState(true);
+
 
   //Llamada a la api
   useEffect(() => {
@@ -62,7 +62,6 @@ function HomePage() {
         </Row>
       )}
 
-{/*       <DefaultFooter /> */}
     </>
   );
 }

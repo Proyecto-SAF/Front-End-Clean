@@ -107,6 +107,8 @@ function ProfileAdminPage() {
     const res = postData.json();
     console.log(res);
 
+
+
     AlertaModal({
       tituloModal: "Se agrego correctamente la noticia",
       tipoModal: "success",
