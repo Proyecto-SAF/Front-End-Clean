@@ -180,7 +180,7 @@ function ProfileAdminPage() {
               <h2 className="title">
                 Marca en este mapa donde se realizara el Programa SAF
               </h2>
-              <MapView />
+              <MapView  />
             </Col>
           </TabPane>
           <TabPane tabId="pills2">
