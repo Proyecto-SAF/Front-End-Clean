@@ -16,6 +16,7 @@ import LandingPage from "views/examples/LandingPage.js";
 import SignUpPage from "./views/examples/SignUp.js";
 import HomePage from "views/examples/HomePage";
 import CatalogoPage from "views/examples/CatalogoPage.js";
+import Catalogo2Page from "views/examples/Catalogo2Page.js";
 import RecetariosPage from "views/examples/RecetariosPage.js";
 import ProfileAdminPage from "views/examples/ProfileAdminPage.js";
 import NoticiasPage from "views/examples/NoticiasPage.js";
@@ -46,6 +47,10 @@ root.render(
          <Route
           path="/catalogo-page"
           render={(props) => <CatalogoPage {...props} />}
+        />
+         <Route
+          path="/catalogo2-page"
+          render={(props) => <Catalogo2Page {...props} />}
         />
         <Route
           path="/pdf-page/:urlpdf"

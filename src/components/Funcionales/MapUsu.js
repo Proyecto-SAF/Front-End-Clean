@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import L from "leaflet";
+
+import axios from "axios";
 import {
   MapContainer,
   TileLayer,
@@ -21,14 +23,17 @@ const MapView = () => {
   });
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
-  const [location, setLocation] = useState([51.505, -0.09]);
+  const [location, setLocation] = useState([
+    -26.18064675300086, -58.188628961794805,
+  ]);
   const [center, setCenter] = useState({
     lat: "-26.18064675300086",
     lng: "-58.188628961794805",
   });
   const mapRef = useRef();
-  
- 
+
+  const [puntos, setPuntos] = useState([]);
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       setLocation([position.coords.latitude, position.coords.longitude]);
@@ -45,57 +50,52 @@ const MapView = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  return (
-    <div className='row'>
-    <div className='col text-center'>
-    <MapContainer 
-      center={center}
-      zoom={12}
-      ref={mapRef}
-      style={{ width, height: height - 50 }}
-    >
-      <FeatureGroup>
-        <Marker
-          position={{ lat: "-26.136743613236106", lng: "-58.16033699937402" }} 
-        >
-          <Popup>
-            <span> Aqui se realiza el programa SAF</span>
-            <br></br>
-            <span>desde las 7:30hs a 12:30hs</span>
-          </Popup>
-        </Marker>
-        <Marker
-          position={{ lat: "-26.180058876227015", lng: "-58.188880131680094" }}
-        >
-          <Popup>
-            <span>Aqui se realiza el programa SAF.</span>
-            <br></br>
-            <span>desde las 7:30hs a 12:30hs</span>
-          </Popup>
-        </Marker>
 
-        <Marker
-          position={{ lat: "-26.192287685773195", lng: "-58.226972147021996" }}
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/puntos");
+        setPuntos(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  return (
+    <div className="row">
+      <div className="col text-center">
+        <MapContainer
+          center={center}
+          zoom={12}
+          ref={mapRef}
+          style={{ width, height: height - 50 }}
         >
-          <Popup>
-            <span>Aqui se realiza el programa SAF.</span>
-            <br></br>
-            <span>desde las 7:30hs a 12:30hs</span>
-          </Popup>
-        </Marker>
-        <Marker position={location} >
-          <Popup>Esta es tu ubicación actual</Popup>
-        </Marker>
-      </FeatureGroup>
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-    </MapContainer>
+          <FeatureGroup>
+            {puntos.map((punto) => (
+              <Marker key={punto.id} position={[punto.lat, punto.lng]}>
+                <Popup>
+                  Aqui se realiza el programa SAF.
+                  <br></br>
+                  <span>Los jueves y sabados</span>
+                  <br></br>
+                  <span>desde las 7:30hs a 12:30hs</span>
+                </Popup>
+              </Marker>
+            ))}
+            <Marker position={location}>
+              <Popup>Esta es tu ubicación actual</Popup>
+            </Marker>
+          </FeatureGroup>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+        </MapContainer>
+      </div>
     </div>
-  </div>
   );
-  
 };
 
 export default MapView;

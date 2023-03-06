@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import L from "leaflet";
+import axios from "axios";
 import {
   MapContainer,
   TileLayer,
@@ -13,13 +14,12 @@ import "leaflet-draw/dist/leaflet.draw.css";
 
 const MapView = () => {
   const initialLayers = [
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-  }),
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors",
+    }),
+  ];
 
-];
-
-/* const saf  = L.Icon.Default.mergeOptions({
+  /* const saf  = L.Icon.Default.mergeOptions({
   iconUrl: '../../assets/img/home-button.png',
   shadowUrl: '../../assets/img/home-button.png',
   iconSize:     [42, 38], 
@@ -29,7 +29,7 @@ const MapView = () => {
   popupAnchor:  [0, -38] 
 }); */
 
-   L.Icon.Default.mergeOptions({
+  L.Icon.Default.mergeOptions({
     iconRetinaUrl:
       "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png",
     iconUrl:
@@ -46,36 +46,39 @@ const MapView = () => {
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
   const [location, setLocation] = useState([51.505, -0.09]);
+  const [puntos, setPuntos] = useState([]);
+
+  //estado para la primera vez que se renderizan los productos en el catalogo
   const mapRef = useRef();
 
   const _onCreate = (e) => {
     console.log(e);
-  
+
     const { layerType, layer } = e;
     if (layerType === "marker") {
       const { _leaflet_id } = layer;
       const latlngs = layer.getLatLng();
-      console.log('Coordenadas');
+      console.log("Coordenadas");
       console.log(latlngs.lat);
-      
-      fetch('http://localhost:4000/crearPunto', {
-        method: 'POST',
+
+      fetch("http://localhost:4000/crearPunto", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: _leaflet_id, lat: latlngs.lat, lng: latlngs.lng })
+        body: JSON.stringify({
+          id: _leaflet_id,
+          lat: latlngs.lat,
+          lng: latlngs.lng,
+        }),
       })
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error(error));
-      
-      setMapLayers((layers) => [
-        ...layers,
-        { id: _leaflet_id, latlngs },
-      ]);
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.error(error));
+
+      setMapLayers((layers) => [...layers, { id: _leaflet_id, latlngs }]);
     }
   };
-  
 
   const _onEdited = (e) => {
     console.log(e);
@@ -85,9 +88,9 @@ const MapView = () => {
 
     Object.values(_layers).map(({ _leaflet_id, editing }) => {
       setMapLayers((layers) =>
-        layers.map((l) =>
-          l.id === _leaflet_id
-           /*  ? { ...l, latlngs: { ...editing.latlngs[0] } }
+        layers.map(
+          (l) => l.id === _leaflet_id
+          /*  ? { ...l, latlngs: { ...editing.latlngs[0] } }
             : l */
         )
       );
@@ -121,8 +124,21 @@ const MapView = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/puntos");
+        setPuntos(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
-    <div className="row">
+    <div className="row" id="map">
       <div className="col text-center">
         <div>
           <MapContainer center={center} zoom={11} ref={mapRef}>
@@ -141,47 +157,18 @@ const MapView = () => {
                   circlemarker: false,
                 }}
               />
-              <Marker 
-                position={{
-                  lat: "-26.136743613236106",
-                  lng: "-58.16033699937402",
-                }}
-              >
-                <Popup>
-                  <span> Aqui se realiza el programa SAF</span>
-                  <br></br>
-                  <span>desde las 7:30hs a 12:30hs</span>
-                </Popup>
-              </Marker>
-              <Marker
-                position={{
-                  lat: "-26.180058876227015",
-                  lng: "-58.188880131680094",
-                }}
-              >
-                <Popup>
-                  <span> Aqui se realiza el programa SAF</span>
-                  <br></br>
-                  <span>desde las 7:30hs a 12:30hs</span>
-                </Popup>
-              </Marker>
-              <Marker
-                position={{
-                  lat: "-26.192287685773195",
-                  lng: "-58.226972147021996",
-                }}
-              >
-                <Popup>
-                  <span>Aqui se realiza el programa SAF.</span>
-                  <br></br>
-                  <span>desde las 7:30hs a 12:30hs</span>
-                </Popup>
-              </Marker>
-              <Popup>
-                <span>Aqui se realiza el programa SAF.</span>
-                <br></br>
-                <span>desde las 7:30hs a 12:30hs</span>
-              </Popup>
+
+              {puntos.map((punto) => (
+                <Marker key={punto.id} position={[punto.lat, punto.lng]}>
+                  <Popup>
+                    Aqui se realiza el programa SAF.
+                    <br></br>
+                    <span>Los jueves y sabados</span>
+                    <br></br>
+                    <span>desde las 7:30hs a 12:30hs</span>
+                  </Popup>
+                </Marker>
+              ))}
               <Marker position={location}>
                 <Popup>Esta es tu ubicación actual</Popup>
               </Marker>
