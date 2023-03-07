@@ -20,14 +20,10 @@ const NoticiaCard = (props) => {
       />
       <div className="card-body">
       <Badge color="info">
-        {" "}
         <i className="now-ui-icons location_pin"></i>
-        {props.ubicacion}
+        {" " + props.ubicacion}
       </Badge>
       <h6>{props.fecha}</h6>
-      </div>
-      <div className="card-body-two">
-      <CardBody>
         <h5>{props.titular}</h5>
         {props.subtitulo ? (
           <CardSubtitle className="mb-2 text-muted" tag="h6">
@@ -36,8 +32,7 @@ const NoticiaCard = (props) => {
         ) : (
           ""
         )}
-        <Button>Leer más..</Button>
-      </CardBody>
+        <button className="button">Leer más..</button>
       </div>
     </div>
   );
