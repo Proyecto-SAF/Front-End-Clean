@@ -1,42 +1,30 @@
 import {
-  Card,
-  CardImg,
   Badge,
   CardBody,
   CardTitle,
   CardSubtitle,
-  CardText,
   Button,
 } from "reactstrap";
 
+import "../Cards/NoticiaCard.css"
+
 const NoticiaCard = (props) => {
   return (
-    <Card
-      key={props._id}
-      id={props._id}
-      style={{
-        maxWidth: "430px",
-        maxHeight: "570px",
-        margin: "auto",
-        boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
-        borderColor: "#D4D4D4",
-      }}
-    >
-      <CardImg
+    <div class="card">
+      <img
+        className="card-img-top"
+        key={props._id}
         alt="img:("
         src={props.img}
-        top
-        width="100%"
         crossOrigin="anonymous"
       />
+      <div className="card-body">
       <Badge color="info">
-        {" "}
         <i className="now-ui-icons location_pin"></i>
-        {props.ubicacion}
+        {" " + props.ubicacion}
       </Badge>
       <h6>{props.fecha}</h6>
-      <CardBody>
-        <CardTitle tag="h5">{props.titular}</CardTitle>
+        <h5>{props.titular}</h5>
         {props.subtitulo ? (
           <CardSubtitle className="mb-2 text-muted" tag="h6">
             {props.subtitulo}
@@ -44,11 +32,9 @@ const NoticiaCard = (props) => {
         ) : (
           ""
         )}
-
-        <CardText>{props.cuerpo}</CardText>
-        <Button>Ver más..</Button>
-      </CardBody>
-    </Card>
+        <button className="button">Leer más..</button>
+      </div>
+    </div>
   );
 };
 

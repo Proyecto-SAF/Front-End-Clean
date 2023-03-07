@@ -7,7 +7,7 @@ import "../../components/Funcionales/App.css";
 
 // core components
 import HomeNavbar from "components/Navbars/HomeNavbar";
-import DefaultFooter from "components/Footers/DefaultFooter.js";
+/* import DefaultFooter from "components/Footers/DefaultFooter.js"; */
 import NoticiasPageHeader from "components/Headers/NoticiasPageHeader";
 import NoticiaCard from "components/Cards/NoticiaCard";
 
