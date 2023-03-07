@@ -20,6 +20,7 @@ import Catalogo2Page from "views/examples/Catalogo2Page.js";
 import RecetariosPage from "views/examples/RecetariosPage.js";
 import ProfileAdminPage from "views/examples/ProfileAdminPage.js";
 import NoticiasPage from "views/examples/NoticiasPage.js";
+import NoticiaView from "views/examples/NoticiaView";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -71,6 +72,10 @@ root.render(
         <Route
           path="/login-page"
           render={(props) => <LoginPage {...props} />}
+        />
+        <Route
+        path="/noticiaView"
+        render={(props) => <NoticiaView {...props}/>}
         />
         <Redirect to="/landing-page" />
         <Redirect from="/" to="/landing-page" />
