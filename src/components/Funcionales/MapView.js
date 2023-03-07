@@ -19,16 +19,12 @@ const MapView = () => {
     }),
   ];
 
-  /* const saf  = L.Icon.Default.mergeOptions({
-  iconUrl: '../../assets/img/home-button.png',
-  shadowUrl: '../../assets/img/home-button.png',
-  iconSize:     [42, 38], 
-  shadowSize:   [42, 20], 
-  iconAnchor:   [21, 38], 
-  shadowAnchor: [4, 20],  
-  popupAnchor:  [0, -38] 
-}); */
-
+  /*   const customIcon = L.icon({
+    iconUrl: '../../assets/img/logo_saf',
+    iconSize: [25, 41], // Tamaño del icono
+    iconAnchor: [12, 41], // Punto del icono que se ubicará en la posición del marker
+    popupAnchor: [1, -34], // Punto donde se ubicará el popup con respecto al icono
+  }); */
   L.Icon.Default.mergeOptions({
     iconRetinaUrl:
       "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png",
@@ -58,8 +54,6 @@ const MapView = () => {
     if (layerType === "marker") {
       const { _leaflet_id } = layer;
       const latlngs = layer.getLatLng();
-      console.log("Coordenadas");
-      console.log(latlngs.lat);
 
       fetch("http://localhost:4000/crearPunto", {
         method: "POST",
@@ -103,8 +97,12 @@ const MapView = () => {
       layers: { _layers },
     } = e;
 
-    Object.values(_layers).map(({ _leaflet_id }) => {
-      setMapLayers((layers) => layers.filter((l) => l.id !== _leaflet_id));
+    Object.values(_layers).map(async ({ _leaflet_id }) => {
+      const punto = await puntos.findOne({ _id: _leaflet_id });
+      if (punto) {
+        await axios.delete(`http://localhost:4000/eliminarpunto/${punto._id}`);
+        setMapLayers((layers) => layers.filter((l) => l.id !== punto._id));
+      }
     });
   };
 
