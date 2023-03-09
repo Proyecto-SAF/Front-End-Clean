@@ -78,7 +78,7 @@ const MapView = () => {
                 <Popup>
                   Aqui se realiza el programa SAF.
                   <br></br>
-                  <span>Los jueves y sabados</span>
+                  <span>Los jueves y sabados unicamente</span>
                   <br></br>
                   <span>desde las 7:30hs a 12:30hs</span>
                 </Popup>

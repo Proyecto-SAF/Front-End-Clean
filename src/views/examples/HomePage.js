@@ -29,7 +29,7 @@ function HomePage() {
           <Alert color="info" isOpen={alert3}>
             <h2>
               Haz click en el punto mas cercano y veras en que momento se
-              realizara el programa soberanía alimentaria formoseña.
+              realizara el programa Soberanía Alimentaria Formoseña.
             </h2>
           </Alert>
           <MapUsu />

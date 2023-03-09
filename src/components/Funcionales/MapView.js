@@ -19,8 +19,8 @@ const MapView = () => {
     }),
   ];
 
-  /*   const customIcon = L.icon({
-    iconUrl: '../../assets/img/logo_saf',
+  /*   const customIcon =L.Icon.Default.mergeOptions({
+    iconUrl: '../../assets/img/casita.png',
     iconSize: [25, 41], // Tamaño del icono
     iconAnchor: [12, 41], // Punto del icono que se ubicará en la posición del marker
     popupAnchor: [1, -34], // Punto donde se ubicará el popup con respecto al icono
@@ -91,21 +91,30 @@ const MapView = () => {
     });
   };
 
+
   const _onDeleted = (e) => {
-    console.log(e);
     const {
       layers: { _layers },
     } = e;
-
-    Object.values(_layers).map(async ({ _leaflet_id }) => {
-      const punto = await puntos.findOne({ _id: _leaflet_id });
-      if (punto) {
-        await axios.delete(`http://localhost:4000/eliminarpunto/${punto._id}`);
-        setMapLayers((layers) => layers.filter((l) => l.id !== punto._id));
+  
+    Object.values(_layers).map(async ({ _latlng }) => {
+      const { lat, lng } = _latlng;
+      console.log("coords");
+      console.log(_latlng);
+      try {
+        await axios.delete(`http://localhost:4000/eliminarPunto/${lat}/${lng}`);
+        setMapLayers((layers) => layers.filter((l) => l.latlngs !== _latlng));
+      } catch (error) {
+        if (error.response.status === 404) {
+          console.log('El recurso no se encontró en el servidor');
+          // Agrega un mensaje para el usuario y una solución alternativa
+        } else {
+          console.log('Error en la solicitud:', error.message);
+        }
       }
     });
   };
-
+  
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       setLocation([position.coords.latitude, position.coords.longitude]);
@@ -161,7 +170,7 @@ const MapView = () => {
                   <Popup>
                     Aqui se realiza el programa SAF.
                     <br></br>
-                    <span>Los jueves y sabados</span>
+                    <span>Los jueves y sabados unicamente</span>
                     <br></br>
                     <span>desde las 7:30hs a 12:30hs</span>
                   </Popup>
