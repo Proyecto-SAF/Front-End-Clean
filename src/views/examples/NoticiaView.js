@@ -7,13 +7,11 @@ import "../../components/Funcionales/App.css";
 
 // core components
 import HomeNavbar from "components/Navbars/HomeNavbar";
-/* import DefaultFooter from "components/Footers/DefaultFooter.js"; */
 import NoticiasPageHeader from "components/Headers/NoticiasPageHeader";
-import NoticiaCard from "components/Cards/NoticiaCard";
 
-function NoticiasPage() {
+function NoticiaView(_id) {
   //estado de la lista de todos los productos
-  const [noticias, setNoticias] = useState([]);
+  const [noticia, setnoticia] = useState([]);
   //estado de la carga de peticiones
   const [loading, setLoading] = useState(true);
   //estado para la primera vez que se renderizan los productos en el catalogo
@@ -23,8 +21,8 @@ function NoticiasPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/noticias");
-        setNoticias(response.data);
+        const response = await axios.get(`http://localhost:4000/verNoticia/`);
+        setnoticia(response.data);
         setLoading(false);
       } catch (error) {
         setLoading(true);
@@ -33,37 +31,27 @@ function NoticiasPage() {
     fetchData();
   }, []);
 
-  console.log(noticias);
-
   useEffect(() => {
     document.body.classList.add("Home-page");
     document.body.classList.add("sidebar-collapse");
     document.documentElement.classList.remove("nav-open");
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
+    console.log("ACA ESTARIA LA NOTICIA")
+    console.log(noticia)
   }, []);
   return (
     <>
-      <HomeNavbar />
-      <NoticiasPageHeader />
+      <HomeNavbar/>
+      <NoticiasPageHeader/>
       <br></br>
-      {loading ? (
-        <div className=" d-flex align-items-center justify-content-center">
-          <Spinner color="info" type="grow">
-            Ups
-          </Spinner>
-          <span>Cargando..</span>
-        </div>
-      ) : (
-        <Row>
-          {noticias.map((noticia) => (
-            <NoticiaCard {...noticia}/>
-          ))}
-        </Row>
-      )}
-
+      <h5>fecha</h5>
+      <h1>Hola mundo</h1>
+      <h3>jakdjasd</h3>
+      <h5>ubicacion</h5>
+      <img alt="img:(" src="https://agenfor.com.ar/wp-content/uploads/2021/03/Soberania-Alimentaria-en-Villa-Dos-Trece5.jpg"></img>
     </>
   );
 }
 
-export default NoticiasPage;
+export default NoticiaView;

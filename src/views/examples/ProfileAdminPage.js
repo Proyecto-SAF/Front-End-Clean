@@ -22,6 +22,7 @@ import {
 import ProfileNavbar from "components/Navbars/ProfileNavbar.js";
 import ProfileAdminHeader from "components/Headers/ProfileAdminHeader.js";
 import DefaultFooter from "components/Footers/DefaultFooter.js";
+import NoticiaFooter from "components/Funcionales/NoticiaFooter.js";
 
 import * as yup from "yup";
 let Noticias_Schema = yup.object().shape({
@@ -183,7 +184,7 @@ function ProfileAdminPage() {
               <MapView  />
             </Col>
           </TabPane>
-          <TabPane tabId="pills2">
+{/*           <TabPane tabId="pills2">
             <Col className="ml-auto mr-auto" md="5">
               <Row className="collections">
                 <div className=" text-center">
@@ -299,7 +300,13 @@ function ProfileAdminPage() {
                 </div>
               </Row>
             </Col>
-          </TabPane>
+          </TabPane> */}
+
+          <NoticiaFooter/>
+
+
+
+
         </TabContent>
       </Container>
 
