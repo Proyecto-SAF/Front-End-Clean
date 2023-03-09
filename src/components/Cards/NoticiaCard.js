@@ -10,7 +10,7 @@ import "../Cards/NoticiaCard.css"
 
 const NoticiaCard = (props) => {
   return (
-    <div class="card">
+    <div className="card">
       <img
         className="card-img-top"
         key={props._id}
